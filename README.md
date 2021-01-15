@@ -1,7 +1,9 @@
 # NJUSE-COA20
-> YDJSIR's COA20 review
+> ### YDJSIR's COA20 review
 >
-> 本总结大量参考了以下资料：
+> 
+>
+> 本总结<font size=28>大量</font>参考了以下资料：
 >
 > #### 邪王真眼的计组总结（2020秋）
 >
