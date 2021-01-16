@@ -17,7 +17,7 @@
 
 ### 存储体系金字塔
 
-![image-20210108205640069](C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210108205640069.png)
+![image-20210108205640069](Storage.assets\image-20210108205640069.png)
 
 #### 三要素：容量、存取时间和价格
 
@@ -38,6 +38,8 @@
 + 减小丢失和等待；
 
 > 事实上，Cache可以看作Memory的Buffer，不同层级的Cache之间也可以相互看作是Buffer，这个概念可以很广
+>
+> RAM相关内容放在`Memory&Cache.md`中。
 
 
 
@@ -181,7 +183,7 @@ $$T = T_S + \frac{1}{2r} + \frac{b}{rN}$$
 
 **性能实测（YDJSIR的4T 希捷酷狼，50MB的读写大小）**
 
-![image-20210108221105071](C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210108221105071.png)
+![image-20210108221105071](Storage.assets\image-20210108221105071.png)
 
 **随机存取效率低**
 
@@ -217,7 +219,7 @@ $$T = T_S + \frac{1}{2r} + \frac{b}{rN}$$
 
 + 廉价
 
-  ![image-20210113233640341](C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210113233640341.png)
+  ![image-20210113233640341](Storage.assets\image-20210113233640341.png)
 
 + 写方式
 
@@ -294,7 +296,7 @@ $$T = T_S + \frac{1}{2r} + \frac{b}{rN}$$
 
 #### Memory Cell - 位元 - 基本单元
 
-<img src="C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210108210011903.png" alt="image-20210108210011903" style="zoom: 50%;" />
+<img src="Storage.assets\image-20210108210011903.png" alt="image-20210108210011903" style="zoom: 50%;" />
 
 - 两个稳定/半稳定状态以代表0和1；
 - 至少能写入一次去设置状态；
@@ -302,7 +304,7 @@ $$T = T_S + \frac{1}{2r} + \frac{b}{rN}$$
 
 #### 分类
 
-![image-20210108210450495](C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210108210450495.png)
+![image-20210108210450495](Storage.assets\image-20210108210450495.png)
 
 #### ROM
 
@@ -330,107 +332,6 @@ $$T = T_S + \frac{1}{2r} + \frac{b}{rN}$$
 
 > 如上表所示，价格越来越贵，写入越发容易。
 
-#### RAM
-
-- 读取速度最快最容易
-- 数据易丢失（必须维持供电）
-
-###### 实机展示对比
-
-![image-20210108212332414](C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210108212332414.png)
-
-可见SRAM还是比DRAM不知道高到哪里去了。
-
-##### DRAM - Dynamic RAM - 用作内存
-
-用电容充电存储数据，有电荷代表1，反之代表0。
-
-它在本质上是一个模拟设备，需要用一个门槛值区分它存储的到底是0还是1。
-
-<img src="C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210108211232572.png" alt="image-20210108211232572" style="zoom: 67%;" />
-
-###### 优点
-
-- 比SRAM便宜；
-- 比SRAM体积小，更容易大规模集成；
-
-###### 缺点
-
-- 由于电容会漏电，需要定期通电刷新，刷新期间无法读写；
-
-  > 读取的时候也会消耗电荷，故读取后也需要重新存储。
-
-- 比SRAM慢；
-
-###### DRAM的刷新
-
-- 集中式刷新
-
-  停止所有读写操作，刷新每一行；
-
-- 分散式刷新
-
-  每个存储周期都刷新每一行（会增加每个存储周期的时间）
-
-- 异步刷新（常见）
-
-  每个`某时间间隔`刷新每一行（效率高）
-
-具体方式请仔细读题。
-
-
-
-##### SRAM - Static RAM - 用作Cache
-
-用逻辑门电路存储数据，是数字设备。
-
-（计基学过的R/S 锁存器、门控D锁存器还记得吗?）
-
-<img src="C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210108212439482.png" alt="image-20210108212439482" style="zoom:67%;" />
-
-###### 优点
-
-- 比DRAM快；
-- 不需要刷新；
-
-###### 缺点
-
-- 难以大规模集成；
-- 比SRAM贵；
-
-
-
-#### 高级DRAM组织
-
-+ **问题**
-  传统的DRAM 芯片受限于其内部结构及其与处理器的存储总线的连接. 
-+ **解决方案**:
-  + SDRAM(Synchronous DRAM)
-  + DDR (DDR SDRAM)
-
-##### SDRAM
-
-+ 传统的 DRAM 是异步的.
-  + 处理器将地址和控制信号提供给存储器,表示存储器中特定单元的一组数据应当被读出或写入DRAM.
-  + 经过一段延时后,DRAM写入或读出数据.在这段时间内,DRAM 执行各种内部功能，如激活行地址线或列地址线的高电容， 读取数据，以及通过输出缓冲将数据输出,而处理器只是等待,降低了性能.
-  + SDRAM 与处理器交换数据同步于外部时钟信号,可以以处理器/存储器总线全速运行,而不必等待.
-  + 由于SDRAM随系统时钟移动数据,CPU 知道数据何时能够准备好.
-
-
-
-##### DDR SDRAM
-
-+ Double-data-rate SDRAM双速率 SDRAM.
-+ 每个时钟周期发送两次数据,一次在脉冲上升沿,一次在下降沿.
-+ DDR 技术的更迭
-  + 提升操作频率
-  + 提升预取缓冲器位数
-    ![DDR](https://i0.hdslb.com/bfs/article/3308197023c32a8fa15623c9601b5a9039fd8d96.png)
-
-
-
-
-
 #### Flash
 
 > 是现在常用的USB和固态硬盘采用的技术
@@ -442,39 +343,7 @@ $$T = T_S + \frac{1}{2r} + \frac{b}{rN}$$
 
 Flash的速度可以很快很快，当然也可以比较慢。下面是YDJSIR的固态。
 
-![image-20210108221409001](C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210108221409001.png)
-
-#### 从位元到主存
-
-##### 寻址
-
-![image-20210108214950629](C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210108214950629.png)
-
-为什么内存序列做成方的？大大减少选择线的数量（上图只需要一纵一横的坐标就可以定位了）
-
-###### 地址解码器
-
-<img src="C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210108215130335.png" alt="image-20210108215130335" style="zoom:33%;" />
-
-每次只有一个输出
-
-##### 芯片-引脚
-
-##### 模块组织
-
-+ 字扩展
-  + **增加了存储器中字的个数**,地址线增加,数据线不变.由**片选信号**来区分各芯片的地址范围.
-+ 位扩展
-  + 增加了字长.地址线不变,数据线增加.读写的时候,一个地址对应几块芯片的同一位置.
-+ 字位扩展
-  + 二者结合
-
-###### 多个插槽拼起来做上面两种拓展
-
-###### Main Memory
-$Main\ memory = RAM + ROM$
-
-$Main\ memory\ capacity = RAM\ capacity$
+![image-20210108221409001](Storage.assets\image-20210108221409001.png)
 
 ## 软件
 
@@ -490,7 +359,7 @@ $Main\ memory\ capacity = RAM\ capacity$
 
 ##### Redundant Array of Independent Disks
 
-![image-20210113234127736](C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Storage.assets\image-20210113234127736.png)
+![image-20210113234127736](Storage.assets\image-20210113234127736.png)
 
 #### 特点
 

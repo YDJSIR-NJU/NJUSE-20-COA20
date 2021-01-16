@@ -1,6 +1,6 @@
 # Overview
 
-> Powered by YDJSIR
+> Powered by $YDJSIR$
 
 > ## 对应PPT
 >
@@ -31,7 +31,7 @@
 
 ​                四部分组成
 
-![img](C:\Users\YuDongjun\Desktop\NJU\2020-Fall\COA\NJUSE-COA20\Overview.assets\clip_image001.png)
+![img](Overview.assets\clip_image001.png)
 
 #### 第二代  晶体管      
 
