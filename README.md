@@ -17,11 +17,13 @@
 
 - [x] Overview
 - [x] README
-- [ ] CPU
-- [ ] Memory
+- [x] CPU
+- [x] Memory
 - [x] Storage
 - [x] BUS
 - [x] IO
+- [ ] 持续完善
+- [ ] 考后总结
 
 
 

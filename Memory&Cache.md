@@ -162,9 +162,11 @@ $Main\ memory\ capacity = RAM\ capacity$
 + <font color=00FF00>Hit </font>: 如果确实在, 这个字被传送给处理器.
 + <font color=0000ff>Miss </font>: 否则,由一定数量的字组成的**一块( block )主存中的数据** 被读入 Cache ,然后传给处理器.
   ![](Memory&Cache.assets/1f77f889fe21b537409937de54e977f1790a1262.jpg)
-+ 时间局部性:
+  
+#### 时间局部性
   未来将要使用的信息(指令和数据), 可能是现在正在使用的信息.
-+ 空间局部性:
+
+#### 空间局部性
   未来将要使用的信息, 很可能与正在使用的信息在存储空间上是邻近的(比如遍历一个一维数组).
 
 ### 判断 Hit 与 Miss
@@ -208,36 +210,39 @@ Cache 容量变大, 命中率增加会变得缓慢,因为搬来的数据可能�
 + 定义: 内存中的一个块映射到 Cache 中固定的行.
 
 + 将主存中的每个块映射到**固定**的可用 Cache 中行.直接映射可以表示为:
-  $$ i=j\space mod\space m$$
-  其中 i 为 Cache 行号, j 为主存块号, m 为 Cache 行数 .
+  $$
+  i=j\space mod\space m
+  $$
+
+  其中 $i$ 为 Cache 行号, $j$ 为主存块号, $m$ 为 Cache 行数 .
   为了实现访问 Cache 每一个主存地址可以看作由**三个域**组成：
-
+  
     + 低 $w$ 位标识某个块中的唯一一个存储单元(字节或字).
-    + 剩余 $s$ 位标识了主存 $2^s$ 个块中的一个.
+  + 剩余 $s$ 位标识了主存 $2^s$ 个块中的一个.
       + 其中 $r$ 位标识了 cache 中的行号(cache 的行数为 $m=2^r$)
-      + $s-r$ 位为 tag 位.用以区分映射到同一行的不同块.
-
+    + $s-r$ 位为 tag 位.用以区分映射到同一行的不同块.
+  
   ##### 总结
-
+  
     + 地址长度: $(s+w)$ 位
     + 可寻址单元数: $2^{s+w}$
     + 块大小=行大小=$2^w$ 个存储单元(字节或字)
     + 主存的块数:$\frac{2^{s+w}}{2^w}=2^s$
-    + Cache 行数:$m=2^r$
+  + Cache 行数:$m=2^r$
     + Cache 容量: $2^{r+w}$ 个字或者字节
     + 标记长度: $(s-r)$ 位
-
+  
   ##### 举例
   $m=16K=2^{14},i=j\space mod\space 2^{14}$,用 16 进制 表示地址有
   
-  |  cache 行  |     主存块的起始地址      |
-  | :--------: | :-----------------------: |
-  |     0      | 000000,010000,....FF0000  |
-  |     1      | 000004,010004,...,FF0004  |
-  |    ...     |            ...            |
-  | $2^{14}-1$ | 00FFFC,01FFFC,...,FFFFFFC |
+  |  cache 行  |       主存块的起始地址       |
+  | :--------: | :--------------------------: |
+  |     0      | 000000, 010000, ... , FF0000 |
+  |     1      | 000004, 010004, ... , FF0004 |
+  |    ...     |             ...              |
+  | $2^{14}-1$ |  00FFFC,01FFFC,...,FFFFFFC   |
   
-  地址24位,其中,高8位为 tag 位,若当前存在该行的标记数与地址中的相同,则14位标识 cache 行号,  低2位标识行中的4个字节(或者字);否则,前22位标识为从主存中取一块.取的主存块的地址为22位加两位0(因为块都是以4倍数开始的,每个块有4个单元)
+  地址24位,其中,高8位为 tag 位,若当前存在该行的标记数与地址中的相同,则14位标识 Cache 行号,  低2位标识行中的4个字节(或者字);否则,前22位标识为从主存中取一块.取的主存块的地址为22位加两位0(因为块都是以4倍数开始的,每个块有4个单元)
   
 + **优点**:
 
@@ -257,7 +262,7 @@ Cache 容量变大, 命中率增加会变得缓慢,因为搬来的数据可能�
 
 <iframe frameborder="0" style="width:100%;height:300px;" src="https://viewer.diagrams.net/?highlight=0000ff&edit=_blank&layers=1&nav=1#R3ZdNj5swEIZ%2FzRwj8RGIOUJgt5eeUmnPXnDBKmBkTEn219cOBsKyUViVVM1eovE7tvE8Mx4C2Pvi%2BMxxlX1nCcnBMpIj2CFYlu0i%2BauEUyeYO9fslJTTRGujcKBvRIuGVhuakHoyUTCWC1pNxZiVJYnFRMOcs3Y67SfLp0%2BtcEpmwiHG%2BVx9oYnIOhVZu1H%2FRmia9U82Xa%2FzFLifrCOpM5yw9kKyI7D3nDHRWcVxT3IFr%2BfSrXu64h0OxkkplizQ5%2FqN80bHps8lTn2wnDVlQtR8A%2BygzagghwrHytvK9EotE0UuR6Y09XaEC3K8eiRzCFRWCGEFEfwkp%2Bhq6NG0I1nL0Fp2QXWrNayTmQ47jfFKQ4d8hZfxH8V%2FfBfsdR7oXjjM2zhkxVbKjBuenwKO419E3OYyQuxGAgvKSjnceMY62LwptY39URnNsQ20%2F4rbdsatlkOIthCEgEKIEPgm%2BAiiHfhS9CFywAvB2ykDPUGwm4GWKMQUIs5pqpjFEgnhUlDAqGxLvnYUNEnU8oCTmr7h1%2FNWim%2FFaCnOAToBOKHaqxGs7hrrSnXrThOAlpWttQZ%2BZ4a%2F%2FQx%2BF5BzVvYQGNrVn%2FWBE2Ii51ZGTPNeKXEft5NY9rSSF3YStAI2a8H7aGVs9%2Bq%2F3j%2Fsv9b8vXWj%2FwqcPvz9dqfXe7Pwj8Ia17svywvgP74A0XcN84OLb98LKJoBfWE8AcvNFcFXLq1UDFE%2BMOMB13XI23Ugy%2BH4IXX2XXyO2tEf"></iframe> 
 
-定义: 内存中的块可以映射到 Cache 中的任意一行.
+定义: 内存中的块可以映射到 Cache 中的<font size=20>任意一行</font>.
 
 ##### 总结
 
@@ -286,10 +291,12 @@ Cache 容量变大, 命中率增加会变得缓慢,因为搬来的数据可能�
 
 定义: Cache 中的行分成组(Set),内存中的块搬到固定的组,组中具体的哪一行不固定.第一步类似直接映射,第二部类似全相联映射. Cache 中分为 $v$ 个组,每组包含 $k$ 个行,则:
 
-$$\begin{aligned}
+$$
+\begin{aligned}
   &m=v\times k\\
   &i=j\space mod\space v\\
-\end{aligned}$$
+\end{aligned}
+$$
 
 其中:$i$ 为组号,  $j$ 为主存块号, $m$ 为主存块数, $v$ 为组数, $k$ 为每个组中的行数, 即$k$路组`(K-way Set)`.
 
@@ -317,14 +324,20 @@ $$\begin{aligned}
 ### 替换算法
 
 > 这些方法的含义和他们的名字是相对应的
+>
+> 下面的读取顺序均为$\{1,2,3,4,1,2,5,1,2,3,4,5\}$
 
 #### 1.最近最少用（LRU）
 
 > 需要统计最近使用次数，电路较为复杂
 
+![image-20210117102511911](Memory&Cache.assets/image-20210117102511911.png)
+
 #### 2.先进先出（FIFO）
 
-> round robin or circular buffer technique
+> Round Robin or Circular Buffer Technique（没有展开）
+
+![image-20210117102722274](Memory&Cache.assets/image-20210117102722274.png)
 
 #### 3.使用最少（LFU)
 
@@ -444,7 +457,24 @@ b)   用户程序：不同大小的固定分区（一个分区内只能放一个
 
 ![img](Memory&Cache.assets/clip_image004.png)
 
-![img](Memory&Cache.assets/clip_image006.png)
+![image-20210117115408160](Memory&Cache.assets/image-20210117115408160.png)
+
+#### CPU读写单个数据访问多少主存次数
+
+> 需要假设各种情况的概率
+>
+> 假设TLB命中率为 $P_{TLB}$，虚页载入的概率为 $P_V$， Cache命中率为 $P_C$，则
+
+- TLB命中且虚页载入且 Cache命中的概率为： $P_{TLB} * P_V * P_C$ `0次`
+- TLB命中且虚页载入但 Cache未命中的概率为：$ P_{TLB} * P_V * (1 - PC)  $` 1次`
+- ~~TLB命中但虚页未载入的 概率为： $P_{TLB} * (1 - PV)$ `1次`~~
+- TLB未命中但虚页载入且 Cache命中的概率为： ：$(1 -  P_{TLB}) * P_V * P_C$ `1次`
+- TLB未命中但虚页载入且 Cache未命中的概率为： ：$(1 - P_{TLB}) * P_V * (1 - P_C)$ `2次`
+- TLB未命中且虚页未载入的概率为： ：$(1 - P_{TLB}) * (1 - P_V)$ `2次` **甚至还要读一次硬盘**
+
+平均的主存访问次数为：
+
+注：也可以这样理解，最坏情况下需要访问2次主存， 1次是页表查找， 1次是存取数据。如果 TLB命中，则可以不用进行页表查找（此时概率为 $P_{TLB}$）；如果载入且 Cache命中，则可以不用从主存中存取数据（此时概率为命中，则可以不用从主存中存取数据（此时概率为$P_V * P_C$）。）。
 
 #### 段式
 
@@ -490,3 +520,14 @@ b)   用户程序：不同大小的固定分区（一个分区内只能放一个
 #### 段页
 
 如果数据段已经在内存，使用全关联映射+LRU加载物理页框；如果数据段不在内存，先按照分段模式进行管理，分配的段长度为数据段包含的总物理页框数/2，再将物理页框加载到内存
+
+#### 虚拟内存的大小不等于主存的容量加上磁盘的容量
+
+一个系统虚拟内存的上限由两方面决定：
+
+1）系统寻址空间的大小，如系统寻址宽度为 32位，则能支持的虚拟内存大小最多为$2^{32}$，即 4G大小。
+
+2）虚拟内存借助磁盘空间来实现，所以虚拟内存一定小于磁盘空间大小。
+
+在不超过上述两条限制的情况下，具体的虚拟内存大小会根据具体设置而定，但磁盘的容量通常会远大于虚拟内存的容量。
+
